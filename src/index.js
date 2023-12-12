@@ -1,10 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import Navbar from "./components/Navbar";
+import Body from "./components/Body";
+import dotenv from "dotenv";
 
-root = ReactDOM.createRoot(document.getElementById('root'));
+dotenv.config();
+
+root = ReactDOM.createRoot(document.getElementById("root"));
 
 const App = () => (
-    <div className="text-yellow-950">Hello</div>
+  <div className="m-0 p-0">
+    <Navbar />
+    <Body />
+  </div>
 );
 
-root.render(<App/>);
+root.render(<App />);
