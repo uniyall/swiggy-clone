@@ -9,10 +9,8 @@ import TestClassComp from "./components/TestClassComp";
 import UserContext from "./utils/UserContext";
 import Body from "./components/Body";
 import dotenv from "dotenv";
-
-// Lazy Loading Contact Component to implement Code Splitting in the Bundle
-const Contact = lazy(() => import("./components/Contact"));
-
+import { Provider } from "react-redux";
+const Contact = lazy(() => import("./components/Contact")); // Lazy Loading Contact Component to implement Code Splitting in the Bundle
 import {
   createBrowserRouter,
   RouterProvider,
@@ -20,21 +18,25 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-
+import appStore from "./utils/redux/appStore";
+import Cart from "./components/Cart";
 dotenv.config();
 
+// Main Code Starts -
 root = ReactDOM.createRoot(document.getElementById("root"));
 
 const AppLayout = () => {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   console.log(userName);
   return (
-    <UserContext.Provider value={{ userName: userName, setUserName }}>
-      <div className="m-0 p-0">
-        <Navbar />
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ userName: userName, setUserName }}>
+        <div className="m-0 p-0">
+          <Navbar />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -62,6 +64,7 @@ const router = createBrowserRouter(
         }}
       />
       <Route path="test" element={<Test />} />
+      <Route path="cart" element={<Cart />}></Route>
     </Route>
   )
 );

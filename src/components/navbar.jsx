@@ -2,8 +2,11 @@ import React, { useState, useContext } from "react";
 import UserContext from "../utils/UserContext";
 import { Link } from "react-router-dom";
 import useIsOnline from "../utils/useIsOnline";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
+  const cartItems = useSelector((state) => state.cart.item);
+  console.log(cartItems);
   const { userName } = useContext(UserContext);
   const [navUser, setNavUser] = useState("");
   const isOnline = useIsOnline();
@@ -37,19 +40,16 @@ export default function Navbar() {
         >
           About Us
         </Link>
-        <Link to="/" className="text-[20px] no-underline text-inherit px-5">
-          Cart
+        <Link to="/cart" className="text-[20px] no-underline text-inherit px-5">
+          {`Cart - ${cartItems.length}`}
         </Link>
         <Link to="/" className="text-[20px] no-underline text-inherit px-5">
           <button
             className="rounded-full border-none p-2 bg-black text-white font-semibold cursor-pointer hover:shadow-lg"
             onClick={() => {
-              if(logButton == 'Login')
-              {
+              if (logButton == "Login") {
                 setLogButton("Logout");
-              }
-              else 
-              {
+              } else {
                 setLogButton("Login");
               }
             }}
